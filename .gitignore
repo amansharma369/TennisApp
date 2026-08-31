@@ -1,0 +1,30 @@
+# Build folders
+bin/
+obj/
+
+# VS Code
+.vscode/
+
+# User-specific files
+*.user
+*.suo
+
+# Logs
+*.log
+
+# OS fi*es
+.DS_Store
+Thumbs.db
+
+# Test res*lts
+TestResults/
+
+# Rider (if used*later)
+.idea/
+
+# Coverage reports
+*overage/
+coverage-report/
+
+# NuGet*packages (usually not committed)
+p*ckages/
