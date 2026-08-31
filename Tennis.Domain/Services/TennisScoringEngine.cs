@@ -1,0 +1,140 @@
+namespace Tennis.Domain.Services;
+
+public class TennisScoringEngine
+{
+    int player1Point = 0;
+    int player2Point = 0;
+    int setsWonByPlayer1 = 0;
+    int setsWonByPlayer2 = 0;
+    int gamesWonByPlayer1 = 0;
+    int gamesWonByPlayer2 = 0;
+    int[] Point = {0, 15, 30, 40, 41,42}; // 41 represents advantage
+    public void RecordPoint()
+    {
+        try
+        {
+            // Implementation for recording a point
+        Console.WriteLine("enter player id (1 or 2) who won the point");
+        int number = Convert.ToInt32(Console.ReadLine());
+        Points(number);
+        Console.WriteLine($"Current Score: Player 1 - {Point[player1Point]}, Player 2 - {Point[player2Point]}");
+
+
+        Game(player1Point, player2Point);
+        Console.WriteLine($"Games Won: Player 1 - {gamesWonByPlayer1}, Player 2 - {gamesWonByPlayer2}");
+        
+        
+        Set(gamesWonByPlayer1, gamesWonByPlayer2);
+        Console.WriteLine($"Sets Won: Player 1 - {setsWonByPlayer1}, Player 2 - {setsWonByPlayer2}");
+        
+        
+        int matchResult = Match(setsWonByPlayer1, setsWonByPlayer2);
+        if (matchResult == 1)
+        {
+            Console.WriteLine("Player 1 wins the match");
+        }
+        else if (matchResult == 2)
+        {
+            Console.WriteLine("Player 2 wins the match");
+        }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
+    }   
+    public void Points(int playerId)
+    {
+        if (playerId == 1)
+        {
+            player1Point++;
+        }
+        else if (playerId == 2)
+        {
+            player2Point++;
+        }
+        else
+        {
+            Console.WriteLine("Invalid player id");
+            return;
+        }
+    }
+    public void Game(int player1Point, int player2Point)
+    {
+        if (player1Point >= 4 && player1Point - player2Point >= 2)
+        {
+            Console.WriteLine("Player 1 wins the game");
+            gamesWonByPlayer1++;
+            DefaultPoints();
+        }
+        else if (player2Point >= 4 && player2Point - player1Point >= 2)
+        {
+            Console.WriteLine("Player 2 wins the game");
+            gamesWonByPlayer2++;
+            DefaultPoints();
+        }
+        else if (player1Point == 3 && player2Point == 3)
+        {
+            Console.WriteLine("Deuce");
+        }
+        else if (player1Point == 4 && player2Point == 4)
+        {
+            Console.WriteLine("Deuce");
+            DefaultDeuce();
+        }
+        else if (player1Point == 4 && player2Point == 3)
+        {
+            Console.WriteLine("Player 1 has advantage");
+        }
+        else if (player2Point == 4 && player1Point == 3)
+        {
+            Console.WriteLine("Player 2 has advantage");
+        }
+    }
+    public void Set(int gamesWonByPlayer1, int gamesWonByPlayer2)
+    {
+        if (gamesWonByPlayer1 >= 6 && gamesWonByPlayer1 - gamesWonByPlayer2 >= 2)
+        {
+            Console.WriteLine("Player 1 wins the set");
+            setsWonByPlayer1++;
+            DefaultGames();
+        }
+        else if (gamesWonByPlayer2 >= 6 && gamesWonByPlayer2 - gamesWonByPlayer1 >= 2)
+        {
+            Console.WriteLine("Player 2 wins the set");
+            setsWonByPlayer2++;
+            DefaultGames();
+        }
+    }
+    public int Match(int setsWonByPlayer1, int setsWonByPlayer2)
+    {
+        if (setsWonByPlayer1 == 2)
+        {
+            Console.WriteLine("Player 1 wins the match");
+            // DefaultSet();
+            return 1;
+        }
+        else if (setsWonByPlayer2 == 2)
+        {
+            Console.WriteLine("Player 2 wins the match");
+            // DefaultSet();
+            return 2;
+        }
+        return 0;
+    }
+    public void DefaultPoints()
+    {
+        player1Point = 0;
+        player2Point = 0;
+    }
+    public void DefaultGames()
+    {
+        gamesWonByPlayer1 = 0;
+        gamesWonByPlayer2 = 0;
+    }
+    public void DefaultDeuce()
+    {
+        player1Point = 3;
+        player2Point = 3;
+    }
+}
