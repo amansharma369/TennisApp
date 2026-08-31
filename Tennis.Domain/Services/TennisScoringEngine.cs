@@ -11,13 +11,13 @@ public class TennisScoringEngine
     int player1TieBreakPoint = 0;
     int player2TieBreakPoint = 0;
     int[] Point = {0, 15, 30, 40, 41,42}; // 41 represents advantage
-    public void RecordPoint()
+    public void RecordPoint(int number)
     {
         try
         {
             // Implementation for recording a point
-        Console.WriteLine("enter player id (1 or 2) who won the point");
-        int number = Convert.ToInt32(Console.ReadLine());
+        // Console.WriteLine("enter player id (1 or 2) who won the point");
+        // int number = Convert.ToInt32(Console.ReadLine());
         Points(number);
         Console.WriteLine($"Current Score: Player 1 - {Point[player1Point]}, Player 2 - {Point[player2Point]}");
 
@@ -110,7 +110,7 @@ public class TennisScoringEngine
         else if (gamesWonByPlayer1 == 6 && gamesWonByPlayer2 == 6)
         {
             Console.WriteLine("Tie-break");
-            // TieBreak();
+            TieBreak();
         }
     }
     public int Match(int setsWonByPlayer1, int setsWonByPlayer2)
@@ -129,10 +129,57 @@ public class TennisScoringEngine
         }
         return 0;
     }
+    public void TieBreak()
+    {
+        Console.WriteLine("Tie-break is has started.");
+        while (!(gamesWonByPlayer1 == 0))
+        {
+            Console.WriteLine($"Current Tie-break Score: Player 1 - {player1TieBreakPoint}, Player 2 - {player2TieBreakPoint}");
+            Console.WriteLine("enter player id (1 or 2) who won the tie break point");
+            int pointWinner = Convert.ToInt32(Console.ReadLine());
+            TieBreakPoints(pointWinner);
+        }
+    }
+    public void TieBreakPoints(int playerId)
+    {
+        if (playerId == 1)
+        {
+            player1TieBreakPoint++;
+        }
+        else if (playerId == 2)
+        {
+            player2TieBreakPoint++;
+        }
+        else
+        {
+            Console.WriteLine("Invalid player id");
+            return;
+        }
+
+        if (player1TieBreakPoint >= 7 && player1TieBreakPoint - player2TieBreakPoint >= 2)
+        {
+            Console.WriteLine("Player 1 wins the tie-break and the set");
+            setsWonByPlayer1++;
+            DefaultGames();
+            DefaultTieBreakPoints();
+        }
+        else if (player2TieBreakPoint >= 7 && player2TieBreakPoint - player1TieBreakPoint >= 2)
+        {
+            Console.WriteLine("Player 2 wins the tie-break and the set");
+            setsWonByPlayer2++;
+            DefaultGames();
+            DefaultTieBreakPoints();
+        }
+    }
     public void DefaultPoints()
     {
         player1Point = 0;
         player2Point = 0;
+    }
+    public void DefaultTieBreakPoints()
+    {
+        player1TieBreakPoint = 0;
+        player2TieBreakPoint = 0;
     }
     public void DefaultGames()
     {
@@ -144,11 +191,5 @@ public class TennisScoringEngine
         player1Point = 3;
         player2Point = 3;
     }
-    public void TieBreak()
-    {
-        Console.WriteLine("Tie-break is has started.");
-        player1TieBreakPoint = 0;
-        player2TieBreakPoint = 0;
-        
-    }
+    
 }
