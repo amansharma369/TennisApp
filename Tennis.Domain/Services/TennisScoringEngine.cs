@@ -107,11 +107,11 @@ public class TennisScoringEngine
             setsWonByPlayer2++;
             DefaultGames();
         }
-        // else if (gamesWonByPlayer1 == 6 && gamesWonByPlayer2 == 6)
-        // {
-        //     Console.WriteLine("Tie-break");
-        //     TieBreak();
-        // }
+        else if (gamesWonByPlayer1 == 6 && gamesWonByPlayer2 == 6)
+        {
+            Console.WriteLine("Tie-break");
+            // TieBreak();
+        }
     }
     public int Match(int setsWonByPlayer1, int setsWonByPlayer2)
     {
