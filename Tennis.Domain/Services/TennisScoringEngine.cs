@@ -8,6 +8,8 @@ public class TennisScoringEngine
     int setsWonByPlayer2 = 0;
     int gamesWonByPlayer1 = 0;
     int gamesWonByPlayer2 = 0;
+    int player1TieBreakPoint = 0;
+    int player2TieBreakPoint = 0;
     int[] Point = {0, 15, 30, 40, 41,42}; // 41 represents advantage
     public void RecordPoint()
     {
@@ -105,6 +107,11 @@ public class TennisScoringEngine
             setsWonByPlayer2++;
             DefaultGames();
         }
+        // else if (gamesWonByPlayer1 == 6 && gamesWonByPlayer2 == 6)
+        // {
+        //     Console.WriteLine("Tie-break");
+        //     TieBreak();
+        // }
     }
     public int Match(int setsWonByPlayer1, int setsWonByPlayer2)
     {
@@ -136,5 +143,12 @@ public class TennisScoringEngine
     {
         player1Point = 3;
         player2Point = 3;
+    }
+    public void TieBreak()
+    {
+        Console.WriteLine("Tie-break is has started.");
+        player1TieBreakPoint = 0;
+        player2TieBreakPoint = 0;
+        
     }
 }
