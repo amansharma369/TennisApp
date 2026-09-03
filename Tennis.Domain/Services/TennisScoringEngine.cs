@@ -170,6 +170,14 @@ public class TennisScoringEngine
             DefaultGames();
             DefaultTieBreakPoints();
         }
+        else if(player1TieBreakPoint > 8 && player1TieBreakPoint > player2TieBreakPoint)
+        {
+            Console.WriteLine("Player 1 has advantage in tie-break");
+        }
+        else if(player2TieBreakPoint > 8 && player2TieBreakPoint > player1TieBreakPoint )
+        {
+            Console.WriteLine("Player 2 has advantage in tie-break");
+        }
     }
     public void DefaultPoints()
     {
