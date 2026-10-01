@@ -2,3 +2,4 @@ we will be shortly start adding the how we started working on the project and wh
 now things are little better
 updated the tie-break logic in the code 
 stated working on the backend - starting from oops
+converting the scoring machine to oops
