@@ -4,8 +4,8 @@ namespace TennisScoreApi.Models.Entities;
 
 /// <summary>
 /// Represents a tennis match between two players.
-/// A match contains sets, tracks status,
-/// current server and determines the overall winner.
+/// A match contains sets, tracks match status,
+/// and determines the overall winner.
 /// </summary>
 public class Match
 {
@@ -41,12 +41,23 @@ public class Match
 
     /// <summary>
     /// Winner of the match.
-    /// Null until determined.
+    /// Null until a winner has been determined.
     /// </summary>
     public Player? Winner { get; private set; }
 
     /// <summary>
+    /// Number of sets won by Player 1.
+    /// </summary>
+    public int Player1SetsWon { get; private set; }
+
+    /// <summary>
+    /// Number of sets won by Player 2.
+    /// </summary>
+    public int Player2SetsWon { get; private set; }
+
+    /// <summary>
     /// Creates a valid tennis match.
+    /// A match cannot exist without two players and an initial server.
     /// </summary>
     public Match(
         int matchId,
@@ -59,6 +70,9 @@ public class Match
         Player2 = player2;
 
         CurrentServer = firstServer;
+
+        Player1SetsWon = 0;
+        Player2SetsWon = 0;
 
         Sets = new List<Set>();
 
@@ -73,13 +87,43 @@ public class Match
         Status = MatchStatus.InProgress;
     }
 
-
     /// <summary>
-    /// Adds a completed set to the match.
+    /// Adds a completed set to the match,
+    /// updates set counts,
+    /// and determines whether the match has a winner.
     /// </summary>
     public void AddSet(Set set)
     {
         Sets.Add(set);
+
+        if (set.Winner == Player1)
+        {
+            Player1SetsWon++;
+        }
+        else if (set.Winner == Player2)
+        {
+            Player2SetsWon++;
+        }
+
+        CheckWinner();
+    }
+
+    /// <summary>
+    /// Determines whether either player has won the match.
+    /// Best-of-three format:
+    /// the first player to win two sets wins the match.
+    /// </summary>
+    private void CheckWinner()
+    {
+        if (Player1SetsWon >= 2)
+        {
+            EndMatch(Player1);
+        }
+
+        if (Player2SetsWon >= 2)
+        {
+            EndMatch(Player2);
+        }
     }
 
     /// <summary>
