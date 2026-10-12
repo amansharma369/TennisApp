@@ -62,6 +62,8 @@ using TennisScoreApi.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using TennisScoreApi.Data;
 using TennisScoreApi.Middleware;
+using TennisScoreApi.Models.Entities;
+using TennisScoreApi.Models.Enums;
 
 
 
@@ -87,4 +89,6 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapControllers();
 
+
 app.Run();
+

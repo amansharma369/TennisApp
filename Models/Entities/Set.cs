@@ -117,7 +117,53 @@ public class Set
     /// </summary>
     public void StartTiebreak()
     {
-        IsTiebreak = true;
+        
+    }
+
+    /// <summary>
+    /// Awards a tie-break point to the specified player
+    /// and checks if the tie-break has been won.
+    /// </summary>
+    public void AwardTieBreakPoint(Player winner)
+    {
+        if (!IsTiebreak)
+        {
+            throw new InvalidOperationException(
+                "Tie-break has not started.");
+        }
+
+        if (winner == Player1)
+        {
+            Player1TiebreakPoints++;
+        }
+        else if (winner == Player2)
+        {
+            Player2TiebreakPoints++;
+        }
+
+        CheckTieBreakWinner();
+    }
+
+    /// <summary>
+    /// Determines whether either player has won the tie-break.
+    /// A player must reach at least 7 points
+    /// and lead by 2 points.
+    /// </summary>
+    private void CheckTieBreakWinner()
+    {
+        if (Player1TiebreakPoints >= 7 &&
+            Player1TiebreakPoints - Player2TiebreakPoints >= 2)
+        {
+            Winner = Player1;
+            EndSet();
+        }
+
+        if (Player2TiebreakPoints >= 7 &&
+            Player2TiebreakPoints - Player1TiebreakPoints >= 2)
+        {
+            Winner = Player2;
+            EndSet();
+        }
     }
 
     /// <summary>
@@ -141,10 +187,10 @@ public class Set
 
     /// <summary>
     /// Ends the set.
-    /// Additional end-of-set actions will be implemented later.
+    /// Future set-completion actions will be added here.
     /// </summary>
     public void EndSet()
     {
-        // To be implemented
+        IsTiebreak = false;
     }
 }

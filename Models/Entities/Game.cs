@@ -98,6 +98,7 @@ public class Game
         CheckAdvantage();
         CheckWinner();
     }
+    
     /// <summary>
     /// Checks whether the game is currently in deuce.
     /// </summary>
@@ -133,14 +134,22 @@ public class Game
 
     private void CheckWinner()
     {
-        if (Player1Points >= 4 && Player1Points - Player2Points >= 2)
+        if (Player1Points >= 4 &&
+            Player1Points - Player2Points >= 2)
         {
             Winner = Player1;
+
+            IsDeuce = false;
+            AdvantagePlayer = null;
         }
 
-        if (Player2Points >= 4 && Player2Points - Player1Points >= 2)
+        if (Player2Points >= 4 &&
+            Player2Points - Player1Points >= 2)
         {
             Winner = Player2;
+
+            IsDeuce = false;
+            AdvantagePlayer = null;
         }
     }
 }
