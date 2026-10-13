@@ -1,3 +1,5 @@
+using TennisScoreApi.Models.Enums;
+
 namespace TennisScoreApi.Models.Entities;
 
 /// <summary>
@@ -85,6 +87,7 @@ public class Game
     public void AwardPoint(Point point)
     {
         Points.Add(point);
+        UpdateStatistics(point);
 
         if (point.Winner == Player1)    
         {
@@ -99,6 +102,52 @@ public class Game
         CheckWinner();
     }
     
+    /// <summary>
+    /// Updates player statistics based on the point outcome.
+    /// </summary>
+    private void UpdateStatistics(Point point)
+    {
+        switch (point.Outcome)
+        {
+            case PointOutcome.Ace:
+                point.Winner.RecordAce();
+                break;
+
+            case PointOutcome.ServiceWinner:
+                point.Winner.RecordServiceWinner();
+                break;
+
+            case PointOutcome.Winner:
+                point.Winner.RecordWinner();
+                break;
+
+            case PointOutcome.ForcedError:
+                point.Winner.RecordForcedError();
+                break;
+
+            case PointOutcome.UnforcedError:
+                if (point.Winner == Player1)
+                {
+                    Player2.RecordUnforcedError();
+                }
+                else
+                {
+                    Player1.RecordUnforcedError();
+                }
+                break;
+
+            case PointOutcome.DoubleFault:
+                if (point.Winner == Player1)
+                {
+                    Player2.RecordDoubleFault();
+                }
+                else
+                {
+                    Player1.RecordDoubleFault();
+                }
+                break;
+        }
+    }
     /// <summary>
     /// Checks whether the game is currently in deuce.
     /// </summary>

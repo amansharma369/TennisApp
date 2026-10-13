@@ -18,4 +18,52 @@ public class Player
 
         Statistics = new Statistics();
     }
+
+    /// <summary>
+    /// Records an ace for the player.
+    /// </summary>
+    public void RecordAce()
+    {
+        Statistics.RecordAce();
+    }
+
+    /// <summary>
+    /// Records a winner for the player.
+    /// </summary>
+    public void RecordWinner()
+    {
+        Statistics.RecordWinner();
+    }
+
+    /// <summary>
+    /// Records a double fault for the player.
+    /// </summary>
+    public void RecordDoubleFault()
+    {
+        Statistics.RecordDoubleFault();
+    }
+
+    /// <summary>
+    /// Records an unforced error for the player.
+    /// </summary>
+    public void RecordUnforcedError()
+    {
+        Statistics.RecordUnforcedError();
+    }
+
+    /// <summary>
+    /// Records a forced error for the player.
+    /// </summary>
+    public void RecordForcedError()
+    {
+        Statistics.RecordForcedError();
+    }
+
+    /// <summary>
+    /// Records a service winner for the player.
+    /// </summary>
+    public void RecordServiceWinner()
+    {
+        Statistics.RecordServiceWinner();
+    }
 }

@@ -1,4 +1,4 @@
-using TennisScoreApi.Models;
+using TennisScoreApi.Models.Entities;
 
 namespace TennisScoreApi.Repositories.Interfaces;
 
