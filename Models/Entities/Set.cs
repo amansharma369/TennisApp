@@ -117,7 +117,7 @@ public class Set
     /// </summary>
     public void StartTiebreak()
     {
-        
+        IsTiebreak = true;
     }
 
     /// <summary>
