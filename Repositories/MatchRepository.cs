@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using TennisScoreApi.Data;
 
 // Imports Match model
-using TennisScoreApi.Models;
+using TennisScoreApi.Models.Entities;
 
 // Imports Repository interface
 using TennisScoreApi.Repositories.Interfaces;

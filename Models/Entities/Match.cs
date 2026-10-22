@@ -60,12 +60,10 @@ public class Match
     /// A match cannot exist without two players and an initial server.
     /// </summary>
     public Match(
-        int matchId,
-        Player player1,
-        Player player2,
-        Player firstServer)
+    Player player1,
+    Player player2,
+    Player firstServer)
     {
-        MatchId = matchId;
         Player1 = player1;
         Player2 = player2;
 
@@ -77,6 +75,10 @@ public class Match
         Sets = new List<Set>();
 
         Status = MatchStatus.Scheduled;
+    }
+    private Match()
+    {
+        Sets = new List<Set>();
     }
 
     /// <summary>

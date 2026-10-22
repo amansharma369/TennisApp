@@ -30,19 +30,19 @@ public class ExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            // Log exception
             _logger.LogError(
                 ex,
                 "An unhandled exception occurred.");
 
             context.Response.StatusCode = 500;
-
             context.Response.ContentType = "application/json";
 
             var response = new
             {
                 Success = false,
-                Message = "An unexpected error occurred."
+                Message = ex.Message,
+                InnerException = ex.InnerException?.Message,
+                StackTrace = ex.StackTrace
             };
 
             var jsonResponse =

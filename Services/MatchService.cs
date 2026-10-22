@@ -34,21 +34,20 @@ public class MatchService : IMatchService
 
     public async Task<Match> CreateNewMatchAsync(string player1Name, string player2Name)
     {
-        var player1 = _playerFactory.CreatePlayer(
+        var player1 =
+    _playerFactory.CreatePlayer(
         player1Name,
-        1,
         "India");
 
-        var player2 =_playerFactory.CreatePlayer(
-        player2Name,
-        2,
-        "India");
+    var player2 =
+        _playerFactory.CreatePlayer(
+            player2Name,
+            "India");
 
-        var match = new Match(
-            1,
-            player1,
-            player2,
-            player1);
+    var match = new Match(
+        player1,
+        player2,
+        player1);
 
         await _repository.AddMatchAsync(match);
 

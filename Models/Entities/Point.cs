@@ -51,4 +51,7 @@ public class Point
         Outcome = outcome;
         TimeStamp = timeStamp;
     }
+    private Point()
+    {
+    }
 }

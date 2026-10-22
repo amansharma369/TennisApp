@@ -9,13 +9,11 @@ namespace TennisScoreApi.Factories;
 public class PlayerFactory : IPlayerFactory
 {
     public Player CreatePlayer(
-        string name,
-        int playerId,
-        string country)
+    string name,
+    string country)
     {
         return new Player(
             name,
-            playerId,
             DateTime.Now,
             country);
     }

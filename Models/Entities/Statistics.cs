@@ -2,6 +2,7 @@ namespace TennisScoreApi.Models.Entities;
 
 public class Statistics
 {
+    public int StatisticsId { get; private set; }
     public int Aces { get; private set;}
     public int ServiceWinners { get; private set;}
     public int Winners { get; private set; }
@@ -61,6 +62,9 @@ public class Statistics
     {
         DoubleFaults++;
     }
+    // private Statistics()
+    // {
+    // }
 
 
 }

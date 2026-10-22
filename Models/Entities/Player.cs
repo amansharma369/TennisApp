@@ -9,13 +9,16 @@ public class Player
 
     public Statistics Statistics {get; private set;}
 
-    public Player(string name, int playerId, DateTime dateOfBirth, string country)
+    public Player( string name, DateTime dateOfBirth, string country)
     {
         Name = name;
-        PlayerId = playerId;
         DateOfBirth = dateOfBirth;
         Country = country;
 
+        Statistics = new Statistics();
+    }
+    private Player()
+    {
         Statistics = new Statistics();
     }
 

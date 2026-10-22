@@ -76,6 +76,10 @@ public class Set
 
         IsTiebreak = false;
     }
+    private Set()
+    {
+        Games = new List<Game>();
+    }
 
     /// <summary>
     /// Adds a completed game to the set,

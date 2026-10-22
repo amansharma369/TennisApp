@@ -81,6 +81,11 @@ public class Game
         AdvantagePlayer = null;
     }
 
+    private Game()
+    {
+        Points = new List<Point>();
+    }
+
     /// <summary>
     /// Awards a point and records it in the game.
     /// </summary>
