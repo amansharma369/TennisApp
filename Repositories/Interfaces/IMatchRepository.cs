@@ -9,4 +9,7 @@ public interface IMatchRepository
 
     // Gets all matches asynchronously
     Task<List<Match>> GetMatchesAsync();
+
+    // Get macth by Id asynchronously
+    Task<Match?> GetMatchByIdAsync(int matchId);
 }

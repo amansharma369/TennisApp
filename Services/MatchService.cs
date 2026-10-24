@@ -32,10 +32,16 @@ public class MatchService : IMatchService
         return await _repository.GetMatchesAsync();
     }
 
+    // Gets a match by Id asynchronously
+    public async Task<Match?> GetMatchByIdAsync(int matchId)
+    {
+        return await _repository.GetMatchByIdAsync(matchId);
+    }
+
     public async Task<Match> CreateNewMatchAsync(string player1Name, string player2Name)
     {
         var player1 =
-    _playerFactory.CreatePlayer(
+        _playerFactory.CreatePlayer(
         player1Name,
         "India");
 

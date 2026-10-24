@@ -32,4 +32,20 @@ public class MatchController : ControllerBase
 
         return Ok(response);
     }
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<MatchResponse>> GetMatchById(int id)
+    {
+        var match =
+            await _matchService.GetMatchByIdAsync(id);
+
+        if (match == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(MatchMapper.ToResponse(match));
+    }
+
+
 }

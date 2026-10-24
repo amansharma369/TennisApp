@@ -13,4 +13,7 @@ public interface IMatchService
 
     // Gets all matches asynchronously
     Task<List<Match>> GetAllMatchesAsync();
+
+    // Gets a match by Id asynchronously
+    Task<Match?> GetMatchByIdAsync(int matchId);
 }

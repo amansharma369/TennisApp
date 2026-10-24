@@ -40,4 +40,12 @@ public class MatchRepository : IMatchRepository
     {
         return await _context.Matches.ToListAsync();
     }
+
+    public async Task<Match?> GetMatchByIdAsync(int matchId)
+    {
+        return await _context.Matches
+        .Include(m => m.Player1)
+        .Include(m => m.Player2)
+        .FirstOrDefaultAsync(m => m.MatchId == matchId);
+    }
 }
