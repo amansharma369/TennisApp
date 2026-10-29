@@ -12,4 +12,6 @@ public interface IMatchRepository
 
     // Get macth by Id asynchronously
     Task<Match?> GetMatchByIdAsync(int matchId);
+
+    Task SaveChangesAsync();
 }

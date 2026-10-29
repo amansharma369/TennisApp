@@ -60,9 +60,8 @@ public class Set
     /// <summary>
     /// Creates a new tennis set.
     /// </summary>
-    public Set(int setId, Player player1, Player player2)
+    public Set(Player player1, Player player2)
     {
-        SetId = setId;
         Player1 = player1;
         Player2 = player2;
 

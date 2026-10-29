@@ -72,7 +72,21 @@ public class Match
         Player1SetsWon = 0;
         Player2SetsWon = 0;
 
-        Sets = new List<Set>();
+        var firstSet =
+            new Set(player1, player2);
+
+        var firstGame =
+            new Game(
+                player1,
+                player2,
+                firstServer);
+
+        firstSet.Games.Add(firstGame);
+
+        Sets = new List<Set>
+        {
+            firstSet
+        };
 
         Status = MatchStatus.Scheduled;
     }

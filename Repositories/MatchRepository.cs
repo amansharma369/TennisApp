@@ -48,4 +48,10 @@ public class MatchRepository : IMatchRepository
         .Include(m => m.Player2)
         .FirstOrDefaultAsync(m => m.MatchId == matchId);
     }
+
+    // Saves changes to SQL Server asynchronously
+    public async Task SaveChangesAsync()
+    {
+        await _context.SaveChangesAsync();
+    }
 }

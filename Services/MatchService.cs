@@ -2,6 +2,7 @@
 // using TennisScoreApi.Factories;
 using TennisScoreApi.Factories.Interfaces;
 using TennisScoreApi.Models.Entities;
+using TennisScoreApi.Models.Enums;
 using TennisScoreApi.Repositories.Interfaces;
 using TennisScoreApi.Services.Interfaces;
 
@@ -59,4 +60,26 @@ public class MatchService : IMatchService
 
         return match;
     }
+
+    public async Task RecordPointAsync(int matchId,int winnerPlayerId,PointOutcome outcome)
+    {
+        var match = await _repository.GetMatchByIdAsync(matchId);
+
+        if (match == null)
+        {
+            throw new InvalidOperationException(
+                $"Match {matchId} was not found.");
+        }
+
+        // TODO:
+        // Find current set
+        // Find current game
+        // Create point
+        // Award point
+        // Check set winner
+        // Check match winner
+
+        await _repository.SaveChangesAsync();
+    }
+
 }

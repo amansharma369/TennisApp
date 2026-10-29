@@ -65,9 +65,8 @@ public class Game
     /// <summary>
     /// Creates a new game with a server.
     /// </summary>
-    public Game(int gameId, Player player1, Player player2, Player server)
+    public Game(Player player1, Player player2, Player server)
     {
-        GameId = gameId;
         Player1 = player1;
         Player2 = player2;
         Server = server;
