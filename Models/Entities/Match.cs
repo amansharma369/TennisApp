@@ -110,7 +110,6 @@ public class Match
     /// </summary>
     public void AddSet(Set set)
     {
-        Sets.Add(set);
 
         if (set.Winner == Player1)
         {

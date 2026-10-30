@@ -88,7 +88,6 @@ public class Set
     /// </summary>
     public void AddGame(Game game)
     {
-        Games.Add(game);
 
         if (game.Winner == Player1)
         {

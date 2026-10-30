@@ -61,23 +61,81 @@ public class MatchService : IMatchService
         return match;
     }
 
-    public async Task RecordPointAsync(int matchId,int winnerPlayerId,PointOutcome outcome)
+    public async Task RecordPointAsync(
+    int matchId,
+    int winnerPlayerId,
+    PointOutcome outcome)
     {
-        var match = await _repository.GetMatchByIdAsync(matchId);
+        var match =
+            await _repository.GetMatchByIdAsync(matchId);
 
         if (match == null)
         {
             throw new InvalidOperationException(
-                $"Match {matchId} was not found.");
+                $"Match {matchId} not found.");
         }
 
-        // TODO:
-        // Find current set
-        // Find current game
-        // Create point
-        // Award point
-        // Check set winner
-        // Check match winner
+        if (match.Winner != null)
+        {
+            throw new InvalidOperationException(
+                "Match is already completed.");
+        }
+
+        var currentSet =
+            match.Sets.Last();
+
+        var currentGame =
+            currentSet.Games.Last();
+
+        var winner =
+            winnerPlayerId == match.Player1.PlayerId
+                ? match.Player1
+                : match.Player2;
+
+        var point = new Point(
+            match.CurrentServer,
+            winner,
+            outcome);
+
+        currentGame.AwardPoint(point);
+
+        // Game completed
+        if (currentGame.Winner != null)
+        {
+            currentSet.AddGame(currentGame);
+
+            // Set completed
+            if (currentSet.Winner != null)
+            {
+                match.AddSet(currentSet);
+
+                // Match completed
+                if (match.Winner == null)
+                {
+                    var nextSet = new Set(
+                        match.Player1,
+                        match.Player2);
+
+                    var firstGame = new Game(
+                        match.Player1,
+                        match.Player2,
+                        match.CurrentServer);
+
+                    nextSet.Games.Add(firstGame);
+
+                    match.Sets.Add(nextSet);
+                }
+            }
+            else
+            {
+                var nextGame = new Game(
+                    match.Player1,
+                    match.Player2,
+                    match.CurrentServer);
+
+                currentSet.Games.Add(nextGame);
+            }
+        }
 
         await _repository.SaveChangesAsync();
     }

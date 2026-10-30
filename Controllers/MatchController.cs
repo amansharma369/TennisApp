@@ -46,6 +46,19 @@ public class MatchController : ControllerBase
 
         return Ok(MatchMapper.ToResponse(match));
     }
+    
+    [HttpPost("{id}/point")]
+    public async Task<IActionResult> RecordPoint(
+        int id,
+        [FromBody]RecordPointRequest request)
+    {
+        await _matchService.RecordPointAsync(
+            id,
+            request.WinnerPlayerId,
+            request.Outcome);
+
+        return Ok();
+    }
 
 
 }

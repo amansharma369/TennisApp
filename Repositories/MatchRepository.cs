@@ -44,9 +44,14 @@ public class MatchRepository : IMatchRepository
     public async Task<Match?> GetMatchByIdAsync(int matchId)
     {
         return await _context.Matches
-        .Include(m => m.Player1)
-        .Include(m => m.Player2)
-        .FirstOrDefaultAsync(m => m.MatchId == matchId);
+            .Include(m => m.Player1)
+            .Include(m => m.Player2)
+            .Include(m => m.CurrentServer)
+            .Include(m => m.Sets)
+                .ThenInclude(s => s.Games)
+                    .ThenInclude(g => g.Points)
+            .FirstOrDefaultAsync(
+                m => m.MatchId == matchId);
     }
 
     // Saves changes to SQL Server asynchronously

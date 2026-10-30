@@ -39,17 +39,14 @@ public class Point
     /// A point cannot exist without a server, winner, and outcome.
     /// </summary>
     public Point(
-        int pointId,
         Player server,
         Player winner,
-        PointOutcome outcome,
-        DateTime timeStamp)
+        PointOutcome outcome)
     {
-        PointId = pointId;
         Server = server;
         Winner = winner;
         Outcome = outcome;
-        TimeStamp = timeStamp;
+        TimeStamp = DateTime.UtcNow;
     }
     private Point()
     {
