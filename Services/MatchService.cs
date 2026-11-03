@@ -84,13 +84,45 @@ public class MatchService : IMatchService
         var currentSet =
             match.Sets.Last();
 
-        var currentGame =
-            currentSet.Games.Last();
-
         var winner =
             winnerPlayerId == match.Player1.PlayerId
                 ? match.Player1
                 : match.Player2;
+
+        if (currentSet.IsTiebreak)
+        {
+
+            currentSet.AwardTieBreakPoint(winner);
+
+            if (currentSet.Winner != null)
+            {
+                match.AddSet(currentSet);
+
+                if (match.Winner == null)
+                {
+                    var nextSet = new Set(
+                        match.Player1,
+                        match.Player2);
+
+                    var firstGame = new Game(
+                        match.Player1,
+                        match.Player2,
+                        match.CurrentServer);
+
+                    nextSet.Games.Add(firstGame);
+
+                    match.Sets.Add(nextSet);
+                }
+            }
+
+            await _repository.SaveChangesAsync();
+            return;
+        }
+
+
+        var currentGame =
+            currentSet.Games.Last();
+
 
         var point = new Point(
             match.CurrentServer,
