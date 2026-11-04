@@ -74,6 +74,10 @@ public class ExceptionHandlingMiddleware
 
         catch (Exception ex)
         {
+            _logger.LogWarning(
+            ex,
+            "Business validation error occurred.");
+
             _logger.LogError(
                 ex,
                 "Unhandled exception occurred.");
