@@ -1,14 +1,18 @@
 using System.Text.Json;
+using TennisScoreApi.DTOs.Responses;
 
 namespace TennisScoreApi.Middleware;
 
+/// <summary>
+/// Handles all unhandled exceptions
+/// and converts them into standard API responses.
+/// </summary>
 public class ExceptionHandlingMiddleware
 {
-    // Reference to next middleware in pipeline
     private readonly RequestDelegate _next;
 
-    // Logger used for error tracking
-    private readonly ILogger<ExceptionHandlingMiddleware> _logger;
+    private readonly ILogger<ExceptionHandlingMiddleware>
+        _logger;
 
     public ExceptionHandlingMiddleware(
         RequestDelegate next,
@@ -18,37 +22,78 @@ public class ExceptionHandlingMiddleware
         _logger = logger;
     }
 
-    public async Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(
+        HttpContext context)
     {
         try
         {
-            // Continue request pipeline
-            // Continue to Controller
-            // Continue to Service
-            // Continue to Repository
             await _next(context);
         }
+
+        catch (InvalidOperationException ex)
+        {
+            _logger.LogWarning(ex.Message);
+
+            context.Response.ContentType =
+                "application/json";
+
+            context.Response.StatusCode =
+                StatusCodes.Status400BadRequest;
+
+            var response =
+                new ErrorResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            await context.Response.WriteAsync(
+                JsonSerializer.Serialize(response));
+        }
+
+        catch (KeyNotFoundException ex)
+        {
+            _logger.LogWarning(ex.Message);
+
+            context.Response.ContentType =
+                "application/json";
+
+            context.Response.StatusCode =
+                StatusCodes.Status404NotFound;
+
+            var response =
+                new ErrorResponse
+                {
+                    Success = false,
+                    Message = ex.Message
+                };
+
+            await context.Response.WriteAsync(
+                JsonSerializer.Serialize(response));
+        }
+
         catch (Exception ex)
         {
             _logger.LogError(
                 ex,
-                "An unhandled exception occurred.");
+                "Unhandled exception occurred.");
 
-            context.Response.StatusCode = 500;
-            context.Response.ContentType = "application/json";
+            context.Response.ContentType =
+                "application/json";
 
-            var response = new
-            {
-                Success = false,
-                Message = ex.Message,
-                InnerException = ex.InnerException?.Message,
-                StackTrace = ex.StackTrace
-            };
+            context.Response.StatusCode =
+                StatusCodes.Status500InternalServerError;
 
-            var jsonResponse =
-                JsonSerializer.Serialize(response);
+            var response =
+                new ErrorResponse
+                {
+                    Success = false,
+                    Message =
+                        "An unexpected error occurred."
+                };
 
-            await context.Response.WriteAsync(jsonResponse);
+            await context.Response.WriteAsync(
+                JsonSerializer.Serialize(response));
         }
     }
 }

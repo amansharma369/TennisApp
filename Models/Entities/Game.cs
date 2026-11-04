@@ -90,6 +90,13 @@ public class Game
     /// </summary>
     public void AwardPoint(Point point)
     {
+        // Validation:
+        // Cannot modify completed game.
+        if (Winner != null)
+        {
+            throw new InvalidOperationException(
+                "Game is already completed.");
+        }
         Points.Add(point);
         UpdateStatistics(point);
 

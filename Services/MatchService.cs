@@ -41,6 +41,31 @@ public class MatchService : IMatchService
 
     public async Task<Match> CreateNewMatchAsync(string player1Name, string player2Name)
     {
+        // Validation:
+        // Player1 name cannot be empty.
+        if (string.IsNullOrWhiteSpace(player1Name))
+        {
+            throw new InvalidOperationException(
+                "Player1 name is required.");
+        }
+
+        // Validation:
+        // Player2 name cannot be empty.
+        if (string.IsNullOrWhiteSpace(player2Name))
+        {
+            throw new InvalidOperationException(
+                "Player2 name is required.");
+        }
+
+        // Validation:
+        // A player cannot play against themselves.
+        if (player1Name.Equals(
+                player2Name,
+                StringComparison.OrdinalIgnoreCase))
+        {
+            throw new InvalidOperationException(
+                "Players must have different names.");
+        }
         var player1 =
         _playerFactory.CreatePlayer(
         player1Name,
@@ -73,6 +98,15 @@ public class MatchService : IMatchService
         {
             throw new InvalidOperationException(
                 $"Match {matchId} not found.");
+        }
+
+        // Validation:
+        // Winner must belong to the current match.
+        if (winnerPlayerId != match.Player1.PlayerId &&
+            winnerPlayerId != match.Player2.PlayerId)
+        {
+            throw new InvalidOperationException(
+                "Winner player does not belong to this match.");
         }
 
         if (match.Winner != null)

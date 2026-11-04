@@ -110,6 +110,13 @@ public class Match
     /// </summary>
     public void AddSet(Set set)
     {
+        // Validation:
+        // Cannot modify completed match.
+        if (Winner != null)
+        {
+            throw new InvalidOperationException(
+                "Match is already completed.");
+        }
 
         if (set.Winner == Player1)
         {
